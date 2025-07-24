@@ -7,13 +7,7 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    // Verificar si hay token de autenticación
-    const token = localStorage.getItem("auth_token")
-    if (token) {
-      router.push("/dashboard")
-    } else {
-      router.push("/login")
-    }
+    router.push("/dashboard")
   }, [router])
 
   return (

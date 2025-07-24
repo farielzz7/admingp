@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import Sidebar from "./Sidebar"
 import Header from "./Header"
@@ -13,36 +13,13 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [user, setUser] = useState<any>(null)
+  const [user] = useState({ name: "Admin", email: "admin@example.com", role: "admin" })
   const router = useRouter()
   const pathname = usePathname()
 
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token")
-    const userData = localStorage.getItem("user_data")
-
-    if (!token) {
-      router.push("/login")
-      return
-    }
-
-    if (userData) {
-      setUser(JSON.parse(userData))
-    }
-  }, [router])
-
   const handleLogout = () => {
-    localStorage.removeItem("auth_token")
-    localStorage.removeItem("user_data")
+    // Since we are bypassing login, just redirect to the login page on logout
     router.push("/login")
-  }
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-      </div>
-    )
   }
 
   return (
